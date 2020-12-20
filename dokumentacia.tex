@@ -57,7 +57,7 @@
 
 \section{Úvod}
 
-    \indent Táto práca vznikla ako dokumentácia k projektu do predmetu IMP- MIkropocerové a vestavěné systémy.  Témou mojej práce sú Testovanie mikrokontroláerov. Predpokladané riešenie problému, bolo na platforme Fitkit3.\textcolor{blue}{\cite{scheme}} Osobná vďaka patrí pánu Ing. Josefovi Strnadelovi, Ph.D., ktorý pomáhal formou konzultácie a promptným odpovedaním mailom na dotazy.\\[0.4em]
+    \indent Táto práca vznikla ako dokumentácia k projektu do predmetu IMP- MIkropocerové a vestavěné systémy.  Témou mojej práce sú Testovanie mikrokontroláerov. Cieľom projektu bolo vytvoriť aplikáciu, ktorá otestuje mikrokontrolér na platforme Fitkit3, ktorá obsahuje mikrokontrolér MCU Freescale KINETIS MK60DN512ZVMD10.\textcolor{blue}{\cite{scheme}} Osobná vďaka patrí pánu Ing. Josefovi Strnadelovi, Ph.D., ktorý pomáhal formou konzultácie a promptným odpovedaním mailom na dotazy.\\[0.4em]
     \indent Práca pozostávala z:
     \begin{itemize}
     \item navrhnutia pár mechanizmov na otestovanie pár častí mikrokontroléru
@@ -68,7 +68,7 @@
 
     \subsection{Zadanie}
 
-        \indent Zadanie tejto práce spadalo do varianty S. Tému som si vybral, pretože mi prišla ako najzaujímavejšia z tém, ktoré boli ešte dostupné. Na implementáciu som použil jazyk C a v prostredí Kinetis Design Studio.
+        \indent Zadanie tejto práce spadalo do varianty S. Tému som si vybral, pretože mi prišla ako najzaujímavejšia z tém, ktoré boli ešte dostupné. Na implementáciu som použil jazyk C a taktiež jazyk symbolických inštrukcií. Prostredie, v ktorom sa pracovalo bolo Kinetis Design Studio.
 
     \subsection{Autor a zdroje}
 
@@ -78,7 +78,7 @@
 
 \section{Testovanie}
 
-    \indent Úlohou programu, bolo otestovať funkčnosť mikrokontroléru. Boli navrhnuté 2 testovacie metódy, ktoré mali overiť funkčnosť FITkit3. Prvá metóda zahrňuje \hyperlink{label}{\textit{Test} č.1} a \hyperlink{label}{\textit{Test č.2}} a druhá metóda \hyperlink{label}{\textit{Test č.3}}. Jednotlivé metódy sa počas chodu aplikácie dokážu prepínať za pomoci tlačítka \texttt{SW6}. Pomocou neho, dokážeme prejsť po otestovaní jedného testu na ďalší.
+    \indent Úlohou projektu bolo sofwarové testovanie programu. To znamená, že počas behu programu a vykonáva ho procesor. Ten postupne spracuváva inštrukcie, ktoré implementujeme. Konkrétne bolo nutné otestovať funkčnosť mikrokontroléru. Boli navrhnuté 2 testovacie metódy, ktoré mali overiť funkčnosť FITkit3. Prvá metóda zahrňuje \hyperlink{label}{\textit{Test} č.1} a \hyperlink{label}{\textit{Test č.2}} a druhá metóda \hyperlink{label}{\textit{Test č.3}}. Jednotlivé metódy sa počas chodu aplikácie dokážu prepínať za pomoci tlačítka \texttt{SW6}. Pomocou neho, dokážeme prejsť po otestovaní jedného testu na ďalší.
     
     \subsection{Test č.1}
     

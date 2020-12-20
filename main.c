@@ -37,6 +37,7 @@
 int pressed_up = 0, pressed_down = 0, pressed_left = 0, pressed_right = 0, pressed_next = 0;
 int beep_flag = 0;
 int state = INP_OUT; //starting state in case
+unsigned pseudo_inf = 4000000000;
 unsigned int compare = 0x200;
 
 /* A delay function */
@@ -226,7 +227,8 @@ int main(void)
             break;
                             
             case REG:
-                ERROR_LABEL: while(1)
+                __asm__("BAL SKIP");
+                __asm__("ERROR_LABEL:"); while(pseudo_inf > 0)
                 {
                     // beeping signalizing error
                     if (beep_flag)
@@ -235,7 +237,9 @@ int main(void)
                         delay(1000);         // set frequence
                     }
                     else GPIOA_PDOR &= ~SPK; // logic 0 on speaker port if beep is false
+                    pseudo_inf--;
                 }
+                __asm__("SKIP:");
                 // checking register0
                 __asm__("LDR R0, =0xAAAAAAAA");            // load 0xAAAAAAAA into register 0
                 __asm__("CMP R0, 0xAAAAAAAA");             // comparing
@@ -355,15 +359,7 @@ int main(void)
                 __asm__("LDR LR, =0x55555555");            // load 0x55555555 into register LR
                 __asm__("CMP LR, 0x55555555");             // comparing
                 __asm__("BNE ERROR_LABEL");                // branch if not equal - ERROR
-                
-                // checking registerPSR
-                __asm__("LDR PSR, =0xAAAAAAAA");           // load 0xAAAAAAAA into register PSR
-                __asm__("CMP PSR, 0xAAAAAAAA");            // comparing
-                __asm__("BNE ERROR_LABEL");                // branch if not equal - ERROR
-                __asm__("LDR PSR, =0x55555555");           // load 0x55555555 into register PSR
-                __asm__("CMP PSR, 0x55555555");            // comparing
-                __asm__("BNE ERROR_LABEL");                // branch if not equal - ERROR
-                // endless loop
+        
             break;
         }
     }
