@@ -1,0 +1,126 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[left=2cm,text={17cm,24cm},top=3cm]{geometry}
+\usepackage[bookmarksopen,colorlinks,plainpages=false,urlcolor=blue,unicode,linkcolor=blue]{hyperref}
+\usepackage{biblatex}
+\addbibresource{file.bib}
+\usepackage[slovak]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{indentfirst}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{eurosym}
+\usepackage{float}
+\usepackage{url}
+\usepackage{svg}
+
+\graphicspath{{./Users/damian/Desktop/}}
+
+\begin{document}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Titulná stránka %%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{titlepage}
+		\begin{center}
+			\includegraphics[width=0.77 \linewidth]{FIT_logo.pdf}
+
+			\vspace{\stretch{0.400}}
+
+			\Huge{IMP\\Mikroprocesorové a vestavěné systémy\\2020/2021} \\
+			\LARGE{\textbf{Varianta termínu - S\\Testování mikrokontrolérů} \\
+			
+			\vspace{\stretch{0.6}}
+		\end{center}
+
+		\begin{minipage}{0.65 \textwidth}
+			\Large
+			\today
+		\end{minipage}
+		\hfill
+		\begin{minipage}[r]{0.5 \textwidth}
+			\Large
+			\begin{tabular}{ll}
+				Šimon Feňko (xfenko01)
+			\end{tabular}
+		\end{minipage}
+	\end{titlepage}
+
+
+% #################################################################################################
+% CONTENT
+
+\setlength{\parskip}{0pt}
+\hypersetup{hidelinks}\tableofcontents
+\setlength{\parskip}{0pt}
+
+\newpage %#########################################################################################
+
+\section{Úvod}
+
+    \indent Táto práca vznikla ako dokumentácia k projektu do predmetu IMP- MIkropocerové a vestavěné systémy.  Témou mojej práce sú Testovanie mikrokontroláerov. Predpokladané riešenie problému, bolo na platforme Fitkit3.\textcolor{blue}{\cite{scheme}} Osobná vďaka patrí pánu Ing. Josefovi Strnadelovi, Ph.D., ktorý pomáhal formou konzultácie a promptným odpovedaním mailom na dotazy.\\[0.4em]
+    \indent Práca pozostávala z:
+    \begin{itemize}
+    \item navrhnutia pár mechanizmov na otestovanie pár častí mikrokontroléru
+    \item implementovania mechanizmov
+    \item demonštrovania funkčnosti formou videa
+    \item vytvorenia dokumentácie
+    \end{itemize}
+
+    \subsection{Zadanie}
+
+        \indent Zadanie tejto práce spadalo do varianty S. Tému som si vybral, pretože mi prišla ako najzaujímavejšia z tém, ktoré boli ešte dostupné. Na implementáciu som použil jazyk C a v prostredí Kinetis Design Studio.
+
+    \subsection{Autor a zdroje}
+
+        \indent Autorom tohto projektu je Šimon Feňko (xfenko01), ktorý je študentom 3. ročníka bakalárskeho štúdia na Fakulte informačních technológií – Vysokého učení technického v Brně.\textcolor{blue}{\cite{VUT}} \\[0.4em]
+        \indent Pri riešení problému s testovaním mikrokontrolérov a so získavaním informácií, ktoré boli potrebné na implementáciu mechanizmu bolo čerpané zo súboru Fitkit3-demo od pána Ing. Michala Bidla, Ph.D. a diplomovej práce \textit{Samočinné testování miktokontrolérů}\textcolor{blue}{\cite{DENK}} od Ing. Filipa Denka, ktorá bola priložená k zadaniu. Taktiež som čerpal informácie, ktoré boli povedané na prednáškach\textcolor{blue}{\cite{IMP}} a laboratórnych cvičeniach, ktoré viedol Ing. Vojtěch Mrázek, Ph.D.
+
+
+\section{Testovanie}
+
+    \indent Úlohou programu, bolo otestovať funkčnosť mikrokontroléru. Boli navrhnuté 2 testovacie metódy, ktoré mali overiť funkčnosť FITkit3. Prvá metóda zahrňuje \hyperlink{label}{\textit{Test} č.1} a \hyperlink{label}{\textit{Test č.2}} a druhá metóda \hyperlink{label}{\textit{Test č.3}}. Jednotlivé metódy sa počas chodu aplikácie dokážu prepínať za pomoci tlačítka \texttt{SW6}. Pomocou neho, dokážeme prejsť po otestovaní jedného testu na ďalší.
+    
+    \subsection{Test č.1}
+    
+        \indent \hypertarget{label}{Test č.1} bol zameraný na testovanie funkčnosti tlačítok za pomoci audia. Princíp spočíva v tom, že po stlačení hociktorého z tlačítok \texttt{SW5}, \texttt{SW4}, \texttt{SW3} a \texttt{SW2} sa ozve pípnutie z reproduktora, ktoré signalizuje správnosť chodu aplikácie a zároveň zariadenia. Vďaka tomu vieme posúdiť, že tlačítka fungujú tak ako majú a takisto aj reproduktor. V prípade, že by sa pípnutie neozvalo, vieme, že nastala chyba v zariadení.
+        
+    \subsection{Test č.2}
+    
+        \indent \hypertarget{label}{Test č.2} bol zameraný na testovanie funkčnosti svetelných diód, za pomoci tlačítok. Funguje na jednoduchom princípe a to takom, že po stlačení akéhokoľvek z tlačítok \texttt{SW5}, \texttt{SW4}, \texttt{SW3} a \texttt{SW2} sa rozosvietia všetky svetelné diódy \texttt{D9-D12} a následne zhasnú (len bliknú). To signalizuje správnosť svetelných diód a zároveň správnosť tlačítok. V opačnom prípade, by sme hovorili o chybovosti zariadenia.
+        
+    \subsection{Test č.3}
+        \indent \hypertarget{label}{Test č.3} bol už ale zameraný na odhalenie takzvaných \textbf{stuck-at} porúch v registroch. Celý je založený na tom, že zisťuje, či nejaký register jadra obsahuje bit, ktorý by nadobúdal konštantnú hodnotu logickej \texttt{0} alebo \texttt{1}. Na to, aby sme tieto stuck-at chyby odhalili, bol implementovaný algoritmus \textbf{Checkerboard} alebo po slovensky šachovnica. Pomocou neho dokážeme nahrávať a verifikovať dva testovacie vzory, ktoré sú si navzájom negáciou. Boli použité vzory:
+        \begin{itemize}
+        \item \texttt{0xAAAAAAAA}
+        \item \texttt{0x55555555}
+        \end{itemize}
+        Tieto vzory boli zvolené z dôvodu, že ak si tieto dva vzory prenesieme do binárnej sústavy a napíšeme pod seba, nadobúdaju podobu šachovnice:\\
+        \begin{itemize}
+        \item \texttt{Prvý vzor: \texttt{0b10101010101010101010101010101010}}
+        \item \texttt{Druhý vzor: \texttt{0b1010101010101010101010101010101}}
+        \end{itemize}\\
+        \indent Test testuje registre jadra \textbf{R0} až \textbf{R12}, \textbf{SP}, \textbf{LR}, \textbf{PSR}. Test postupuje a akonáhle odhalí na jednom z bitov \textbf{stuck-at} poruchu, posunie program do stavu v ktorom prebieha nekonečný cyklus pípania a to symbolizuje chybovosť. Postup, ktorý bol využitý na riešenie problému je uvedený nižšie:
+        \begin{figure*}[h]
+        \centering
+        \includegraphics[height=10cm, keepaspectratio]{diagram.png}
+        \caption{Vývojový diagram testovania CPU registrov}
+        \end{figure*}
+        
+    
+\newpage
+
+\section{Záver}
+
+    \indent Pokúsil som sa implementovať 3 mechanizmy, ktoré by mali otestovať funkčnosť mikrokontrolérov. Z dôvodu, že som nemal potrebný FITkit 3, pomocou ktorého by som si vedel otestovať svoj program, sa neodvážim zhodnotiť funkčnosť mojich testov. Mal som takisto záujem si požičiať FITkit 1.2 od známeho, ale z dôvodu pandemických opatrení, ktoré v tomto čase vláda Slovenskej republiky vydala (lockdown), som nebol schopný sa mimo okres dostať a vyzdvihnúť si ho. Preto som sa pokúsil aspoň, na základe informácií z prednášok, democvika a diplomovej práce pána Denka implementovať 3 testy, ktoré sú preložiteľné a mali by byť funkčné.  \\[1em]
+    \textbf{Hodnotenie pomocou kľúčov E, F, Q, P, D:}\\
+    \textbf{E} - prístup: Myslím si, že na projekt som si vyhradil dosť času, keďže som si ho nechal ako posledný z projektov. Vyhradil som si naňho približne týždeň, aby som bol schopný si ešte niekoľkokrát prejsť zopár potrebných prednášok a naštudovať diplomovú prácu. Keďže som začal hneď po odovzdaní predchádzajúceho projektu, tak hodnotím svoj prístup ako dobrý. \textbf{(1/1)}\\
+    \textbf{F} - funkčnosť: Keďže som nebol schopný si svoju naprogramovanú aplikáciu spustiť a zároveň otestovať, si svoju funkčnosť netrúfam ohodnotiť.\\
+    \textbf{Q} - kvalita: uživateľská prívetivosť (1/1), priehľadnosť kódu som sa snažil spraviť čo najlepšie, odriadkovaním a riadnym okomentovaním (1/1), dekompozícia (0.5/1). Dokopy \textbf{(2.5/3)}\\
+    \textbf{P} - prezentácia: (\textbf{1/1)}\\
+    \textbf{D} - dokumentácia: Dokumentáciu som sa snažil spraviť čo najpriehľadnejšiu a podrobnú v \LaTeX. \textbf{(4/4)}\\[1em]
+    Celkové hodnotenie, ktoré by som si sám udelil by bolo približne \textbf{11.5b}, keďže body za funkčnosť projektu by mali byť presunuté do dokumentácie, no napriek tomu sa sa naďalej snažil naslepo implementovať funkčnú a preložiteľnú časť kódu.
+    
+\newpage %#########################################################################################
+\printbibliography
+
+\end{document} %###################################################################################
